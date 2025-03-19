@@ -155,13 +155,14 @@ const Navbar = () => {
           position="static"
           sx={{ backgroundColor: "transparent", boxShadow: "none" }}
         >
-          <Toolbar className="flex justify-center mx-auto items-center py-4">
+          <Toolbar className="flex justify-center mx-auto items-center py-4 font-playFair">
             {!isMobile ? (
               <div className="flex items-center space-x-8">
                 {navItems.map((item) => (
                   <Button
                     key={item.id}
                     onClick={() => handleNavigation(item)}
+                    className="font-playFair"
                     sx={{
                       color: "#fff",
                       textTransform: "none",
@@ -177,7 +178,7 @@ const Navbar = () => {
                 ))}
                 <Button
                   onClick={handleDonate}
-                  className="text-white px-8 py-2 bg-gradient-to-r from-[#f2e496] via-[#b3892d] to-[#ba983c]"
+                  className="text-white font-playFair px-8 py-2 bg-gradient-to-r from-[#f2e496] via-[#b3892d] to-[#ba983c]"
                   sx={{
                     textTransform: "none",
                     borderRadius: "25px",

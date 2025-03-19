@@ -4,6 +4,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        playFair: ["Playfair Display", "serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+      },
       colors: {
         mainColor: "#B5995A",
         secondaryColor: "#25292F",
