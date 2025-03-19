@@ -13,9 +13,14 @@ import {
   useMediaQuery,
   createTheme,
   Container,
+  Popper,
+  Paper,
+  Grow,
+  ClickAwayListener,
+  MenuList,
+  MenuItem,
 } from "@mui/material";
 import menuImg from "../../assets/SVG.svg";
-import logoImg from "../../assets/logo.svg";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -23,6 +28,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openSevasMenu, setOpenSevasMenu] = useState(false);
+  const sevasAnchorRef = React.useRef(null);
 
   const theme = createTheme({
     breakpoints: {
@@ -37,6 +44,13 @@ const Navbar = () => {
       },
     },
   });
+
+  const sevasSubmenu = [
+    { id: 1, text: "Daily Sevas", path: "/sevas/daily" },
+    { id: 2, text: "Special Sevas", path: "/sevas/special" },
+    { id: 3, text: "Festival Sevas", path: "/sevas/festival" },
+    { id: 4, text: "Book a Seva", path: "/sevas/book" },
+  ];
 
   const navItems = [
     {
@@ -56,6 +70,7 @@ const Navbar = () => {
       text: "Sevas",
       path: "#seva",
       type: "section",
+      hasSubmenu: true,
     },
     {
       id: 4,
@@ -116,6 +131,33 @@ const Navbar = () => {
     if (isMobile) handleDrawerToggle();
   };
 
+  const handleSevasSubmenuItem = (path) => {
+    navigate(path);
+    setOpenSevasMenu(false);
+  };
+
+  const handleSevasMouseEnter = () => {
+    if (!isMobile) {
+      setOpenSevasMenu(true);
+    }
+  };
+
+  const handleSevasMouseLeave = () => {
+    if (!isMobile) {
+      setOpenSevasMenu(false);
+    }
+  };
+
+  const handleClose = (event) => {
+    if (
+      sevasAnchorRef.current &&
+      sevasAnchorRef.current.contains(event.target)
+    ) {
+      return;
+    }
+    setOpenSevasMenu(false);
+  };
+
   useEffect(() => {
     if (location.hash) {
       const targetId = location.hash.replace("#", "");
@@ -140,20 +182,99 @@ const Navbar = () => {
   const drawer = (
     <List>
       {navItems.map((item) => (
-        <ListItem key={item.id} disablePadding>
-          <ListItemButton onClick={() => handleNavigation(item)}>
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        </ListItem>
+        <Box key={item.id}>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                transition: "all 0.5s ease",
+                color: item.hasSubmenu && openSevasMenu ? "#B5995A" : "inherit",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                },
+              }}
+              onClick={() => {
+                if (item.hasSubmenu) {
+                  setOpenSevasMenu(!openSevasMenu);
+                } else {
+                  handleNavigation(item);
+                }
+              }}
+            >
+              <ListItemText
+                primary={item.text}
+                sx={{
+                  "& .MuiListItemText-primary": {
+                    transition: "all 0.3s ease",
+                    fontWeight:
+                      item.hasSubmenu && openSevasMenu ? "500" : "normal",
+                  },
+                }}
+              />
+              {item.hasSubmenu && (
+                <IconButton
+                  size="small"
+                  sx={{
+                    color: "#B5995A",
+                    transform: openSevasMenu
+                      ? "rotate(180deg)"
+                      : "rotate(0deg)",
+                    transition: "transform 0.3s ease",
+                    padding: 0,
+                  }}
+                >
+                  ▼
+                </IconButton>
+              )}
+            </ListItemButton>
+          </ListItem>
+
+          {item.hasSubmenu && (
+            <Box
+              sx={{
+                maxHeight: openSevasMenu ? "400px" : "0px",
+                overflow: "hidden",
+                transition: "all 0.5s ease",
+                opacity: openSevasMenu ? 1 : 0,
+              }}
+            >
+              <List sx={{ pl: 4 }}>
+                {sevasSubmenu.map((subItem) => (
+                  <ListItem key={subItem.id} disablePadding>
+                    <ListItemButton
+                      onClick={() => handleSevasSubmenuItem(subItem.path)}
+                      sx={{
+                        transition: "background-color 0.3s ease",
+                        "&:hover": {
+                          backgroundColor: "rgba(181, 153, 90, 0.1)",
+                        },
+                        pl: 2,
+                        borderLeft: "2px solid rgba(181, 153, 90, 0.5)",
+                      }}
+                    >
+                      <ListItemText
+                        primary={subItem.text}
+                        sx={{
+                          "& .MuiListItemText-primary": {
+                            fontSize: "0.9rem",
+                          },
+                        }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          )}
+        </Box>
       ))}
     </List>
   );
 
   return (
     <div className="bg-transparent w-full">
-      <Container maxWidth="lg" className="relative z-30">
+      <Container maxWidth="lg" className="relative z-30 mt-3">
         <AppBar
-          position="static mt-3"
+          position="static"
           sx={{ backgroundColor: "transparent", boxShadow: "none" }}
         >
           <Toolbar className="flex justify-between lg:justify-center lg:mx-auto items-center py-4 font-playFair">
@@ -169,22 +290,150 @@ const Navbar = () => {
             {!isMobile ? (
               <div className="flex items-center space-x-8">
                 {navItems.map((item) => (
-                  <Button
+                  <div
                     key={item.id}
-                    onClick={() => handleNavigation(item)}
-                    className="font-playFair"
-                    sx={{
-                      color: "#fff",
-                      textTransform: "none",
-                      fontSize: "16px",
-                      fontWeight: "normal",
-                      "&:hover": {
-                        backgroundColor: "transparent",
-                      },
-                    }}
+                    className="relative group"
+                    onMouseEnter={
+                      item.hasSubmenu ? handleSevasMouseEnter : undefined
+                    }
+                    onMouseLeave={
+                      item.hasSubmenu ? handleSevasMouseLeave : undefined
+                    }
                   >
-                    {item.text}
-                  </Button>
+                    <Button
+                      ref={item.hasSubmenu ? sevasAnchorRef : null}
+                      onClick={() => handleNavigation(item)}
+                      className="font-playFair"
+                      sx={{
+                        color: "#fff",
+                        textTransform: "none",
+                        fontSize: "16px",
+                        fontWeight: "normal",
+                        position: "relative",
+                        "&:hover": {
+                          backgroundColor: "transparent",
+                        },
+
+                        "&::after": item.hasSubmenu
+                          ? {
+                              content: '""',
+                              position: "absolute",
+                              bottom: 0,
+                              left: "50%",
+                              width: openSevasMenu ? "100%" : "0%",
+                              height: "2px",
+                              backgroundColor: "#B5995A",
+                              transition: "all 0.3s ease",
+                              transform: "translateX(-50%)",
+                            }
+                          : {
+                              content: '""',
+                              position: "absolute",
+                              bottom: 0,
+                              left: "50%",
+                              width: !openSevasMenu ? "100%" : "0%",
+                              height: "2px",
+                              backgroundColor: "#B5995A",
+                              transition: "all 0.3s ease",
+                              transform: "translateX(-50%)",
+                            },
+                      }}
+                    >
+                      {item.text}
+                      {item.hasSubmenu && (
+                        <span
+                          style={{
+                            marginLeft: "5px",
+                            fontSize: "10px",
+                            transition: "transform 0.3s ease",
+                            display: "inline-block",
+                            transform: openSevasMenu
+                              ? "rotate(180deg)"
+                              : "rotate(0deg)",
+                          }}
+                        >
+                          ▼
+                        </span>
+                      )}
+                    </Button>
+
+                    {item.hasSubmenu && (
+                      <Popper
+                        open={openSevasMenu}
+                        anchorEl={sevasAnchorRef.current}
+                        placement="bottom-start"
+                        transition
+                        disablePortal
+                        style={{ zIndex: 1301 }}
+                      >
+                        {({ TransitionProps }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{ transformOrigin: "top left" }}
+                            timeout={300}
+                          >
+                            <Paper
+                              sx={{
+                                bgcolor: "rgba(37, 41, 47, 0.95)",
+                                color: "#fff",
+                                minWidth: "200px",
+                                borderRadius: "8px",
+                                mt: 1,
+                                boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+                                overflow: "hidden",
+                                border: "1px solid rgba(181, 153, 90, 0.3)",
+                              }}
+                              elevation={3}
+                            >
+                              <MenuList
+                                sx={{
+                                  padding: "4px",
+                                }}
+                              >
+                                {sevasSubmenu.map((subItem) => (
+                                  <MenuItem
+                                    key={subItem.id}
+                                    onClick={() =>
+                                      handleSevasSubmenuItem(subItem.path)
+                                    }
+                                    sx={{
+                                      fontFamily: "inherit",
+                                      margin: "2px 0",
+                                      padding: "8px 16px",
+                                      borderRadius: "6px",
+                                      transition: "all 0.2s ease",
+                                      position: "relative",
+                                      "&:hover": {
+                                        bgcolor: "#B5995Ac3",
+                                      },
+                                      "&::before": {
+                                        content: '""',
+                                        position: "absolute",
+                                        left: "4px",
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                        width: "0",
+                                        height: "0",
+                                        backgroundColor: "#B5995A",
+                                        borderRadius: "50%",
+                                        transition: "all 0.2s ease",
+                                      },
+                                      "&:hover::before": {
+                                        width: "4px",
+                                        height: "4px",
+                                      },
+                                    }}
+                                  >
+                                    {subItem.text}
+                                  </MenuItem>
+                                ))}
+                              </MenuList>
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
+                    )}
+                  </div>
                 ))}
                 <Button
                   onClick={handleDonate}
