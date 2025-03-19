@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   AppBar,
+  Box,
   Toolbar,
   Button,
   Drawer,
@@ -13,8 +14,9 @@ import {
   createTheme,
   Container,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate, useLocation } from "react-router-dom";
+import menuImg from "../../assets/SVG.svg";
+import logoImg from "../../assets/logo.svg";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -82,7 +84,6 @@ const Navbar = () => {
   };
 
   const handleDonate = () => {
-    // Handle donation button click
     navigate("/donate");
   };
 
@@ -155,7 +156,16 @@ const Navbar = () => {
           position="static"
           sx={{ backgroundColor: "transparent", boxShadow: "none" }}
         >
-          <Toolbar className="flex justify-center mx-auto items-center py-4 font-playFair">
+          <Toolbar className="flex justify-between lg:justify-center lg:mx-auto items-center py-4 font-playFair">
+            <Box className="flex lg:hidden items-center flex-grow">
+              <Link
+                to="/"
+                style={{ textDecoration: "none", color: "inherit" }}
+                className="font-montserrat"
+              >
+                Tiruchanar Devasthanam
+              </Link>
+            </Box>
             {!isMobile ? (
               <div className="flex items-center space-x-8">
                 {navItems.map((item) => (
@@ -194,14 +204,11 @@ const Navbar = () => {
               </div>
             ) : (
               <IconButton
-                sx={{
-                  color: "#ffffff",
-                }}
                 aria-label="open drawer"
                 edge="end"
                 onClick={handleDrawerToggle}
               >
-                <MenuIcon />
+                <img src={menuImg} alt="Menu" />
               </IconButton>
             )}
           </Toolbar>
@@ -228,10 +235,10 @@ const Navbar = () => {
         >
           {drawer}
           <Button
-            variant="contained"
+            className="text-white font-playFair px-8 py-2 bg-gradient-to-r from-[#f2e496] via-[#b3892d] to-[#ba983c]"
             sx={{
-              color: "#000",
-              backgroundColor: "#D4AF37",
+              color: "#fff",
+              backgroundColor: "#b3892d",
               width: "80%",
               marginX: "auto",
               paddingY: "10px",
@@ -241,7 +248,7 @@ const Navbar = () => {
               fontWeight: "medium",
               textTransform: "none",
               "&:hover": {
-                backgroundColor: "#c4a030",
+                backgroundColor: "#ba983c",
               },
             }}
             onClick={handleDonate}

@@ -8,6 +8,10 @@ export default {
         playFair: ["Playfair Display", "serif"],
         montserrat: ["Montserrat", "sans-serif"],
       },
+      backgroundColor: {
+        goldGradient:
+          "linear-gradient(90deg, #f2e496 0%, #b3892d 47.5%, #ba983c 100%)",
+      },
       colors: {
         mainColor: "#B5995A",
         secondaryColor: "#25292F",
