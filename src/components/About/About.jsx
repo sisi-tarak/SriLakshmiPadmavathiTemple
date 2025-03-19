@@ -13,10 +13,8 @@ const About = () => {
         </h1>
         <img className="w-1/8 animate-pulse" src={white} alt="" />
       </div>
-      {
-        //for imgage and container
-      }
-      <div className="m-auto w-[80%] flex flex-col gap-4 sm:flex-col md:flex-row  mt-4 md:justify-between items-center">
+
+      <div className="m-auto w-[80%] flex flex-col gap-4 flex-col lg:flex-row  mt-4 md:justify-between items-center">
         <img className="w-[460px]  sm:" src={ma} alt="" />
         <img className="w-[400px]" src={paper} alt="" />
       </div>

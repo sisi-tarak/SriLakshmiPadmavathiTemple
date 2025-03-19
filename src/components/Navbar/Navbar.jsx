@@ -153,7 +153,7 @@ const Navbar = () => {
     <div className="bg-transparent w-full">
       <Container maxWidth="lg" className="relative z-30">
         <AppBar
-          position="static"
+          position="static mt-3"
           sx={{ backgroundColor: "transparent", boxShadow: "none" }}
         >
           <Toolbar className="flex justify-between lg:justify-center lg:mx-auto items-center py-4 font-playFair">
@@ -224,12 +224,12 @@ const Navbar = () => {
           }}
           sx={{
             "& .MuiDrawer-paper": {
-              color: "#efefef",
+              color: "#ffffff",
               paddingTop: "50px",
               paddingLeft: "20px",
               boxSizing: "border-box",
               width: 250,
-              backgroundColor: "#1a1e25",
+              backgroundColor: "#25292F",
             },
           }}
         >
