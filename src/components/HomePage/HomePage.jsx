@@ -4,6 +4,7 @@ import About from "../About/About";
 import Seva from "../Seva/Seva";
 import Gallary from "../Gallary/Gallary";
 import Trust from "../Trust/Trust";
+import ResearchPage from "../ResearchPage/ResearchPage";
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
       <Seva />
       <Gallary />
       <Trust />
+      <ResearchPage />
     </>
   );
 };
