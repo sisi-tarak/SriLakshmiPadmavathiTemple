@@ -23,7 +23,10 @@ const Trust = () => {
   ];
 
   return (
-    <div className="min-h-screen w-full text-white p-4 relative overflow-hidden">
+    <section
+      id="trust"
+      className="min-h-screen w-full text-white p-4 relative overflow-hidden"
+    >
       <div className="flex flex-col items-center my-12">
         <div className="text-sm font-semibold mb-1">TRUST</div>
         <div className="text-2xl font-bold text-yellow-600 mb-2">SLPP</div>
@@ -73,7 +76,7 @@ const Trust = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

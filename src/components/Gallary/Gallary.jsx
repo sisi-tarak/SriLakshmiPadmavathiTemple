@@ -70,7 +70,7 @@ const mediaItems = [
 ];
 const Gallary = () => {
   return (
-    <div id="gallary" className="mt-14 mb-8 ">
+    <section id="gallery" className="mt-14 mb-8 ">
       <div className="flex flex-col justify-center items-center gap-2">
         <h1 className="text-white">GALLERY</h1>
         <h1 className="text-xl sm:text-3xl md:text-4xl text-mainColor">
@@ -82,7 +82,7 @@ const Gallary = () => {
       <div className="flex flex-wrap  w-[85%] m-auto items-center justify-center gap-3">
         <InteractiveGallery mediaItems={mediaItems} title="" description="" />
       </div>
-    </div>
+    </section>
   );
 };
 
