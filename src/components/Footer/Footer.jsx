@@ -240,7 +240,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-4 text-center text-white">
+        <div className="border-t border-secondaryColor mt-8 pt-4 text-center text-white">
           <p className="flex flex-col sm:flex-row items-center justify-center gap-y-2 sm:gap-x-1 text-sm">
             <span className="font-semibold">
               Copyright 2025 Sipptempletpt.org
