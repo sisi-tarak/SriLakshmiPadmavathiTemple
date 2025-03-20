@@ -3,6 +3,7 @@ import Waves from "./Waves";
 import gold from "../../assets/gold.png";
 import bannerPic from "../../assets/padmavathi.svg";
 import vectorImg from "../../assets/Vector.png";
+import { WordFadeIn } from "../WordFadeIn";
 
 const Cover = () => {
   return (
@@ -17,9 +18,10 @@ const Cover = () => {
           className="w-full flex flex-col-reverse md:flex-row items-center  justify-evenly align-center my-auto gap-y-6 md:gap-2"
         >
           <div className="flex flex-col gap-2">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-playFair font-semibold text-mainColor">
-              Sri Lakshmi Padmavathi
-            </h1>
+            <WordFadeIn
+              words="Sri Lakshmi Padmavathi"
+              className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-playFair font-semibold text-mainColor"
+            />
             <span className="text-center font-montserrat text-white">
               Something here
             </span>
