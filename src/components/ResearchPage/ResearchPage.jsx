@@ -23,7 +23,7 @@ function ResearchPage() {
         </h1>
         <img className="w-1/8 animate-pulse" src={white} alt="" />
       </div>
-      <div className="container">
+      <div className="container flex mx-auto mt-8 mb-12">
         <ResearchMap locations={researchLocations} title="" />
       </div>
     </div>

@@ -100,7 +100,7 @@ const ResearchMap = ({ locations, title }) => {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "YOUR_API_KEY",
+    googleMapsApiKey: "AIzaSyCztqWSmvXtm0ok4erFnEBdxZmUCn1iMq4",
   });
 
   const handleMarkerClick = (location) => {
@@ -116,7 +116,7 @@ const ResearchMap = ({ locations, title }) => {
   };
 
   const customMarkerIcon = {
-    url: "/marker-gold.png", 
+    url: "/marker-gold.png",
     scaledSize: { width: 38, height: 38 },
     origin: { x: 0, y: 0 },
     anchor: { x: 19, y: 38 },
@@ -124,7 +124,6 @@ const ResearchMap = ({ locations, title }) => {
 
   return (
     <div className="research-map-container">
-      <h2 className="map-title">{title || "Research Locations Explored"}</h2>
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
