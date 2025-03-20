@@ -44,7 +44,7 @@ const Seva = () => {
         <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-mainColor text-center">
           Our Collections
         </h1>
-        <img className="w-16 md:w-24 animate-pulse" src={white} alt="" />
+        <img className="w-1/8 animate-pulse" src={white} alt="" />
       </div>
 
       <div className="relative hidden md:flex flex-row justify-center items-start gap-2 lg:gap-4 xl:gap-6 my-12 w-full md:w-[95%] lg:w-[90%] xl:w-[85%] mx-auto px-4 -mt-36">
