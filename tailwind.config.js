@@ -3,14 +3,36 @@ export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      "2xs": {
+        max: "424px",
+      },
+      xs: {
+        min: "425px",
+      },
+      sm: {
+        min: "640px",
+      },
+      md: {
+        min: "768px",
+      },
+      lg: {
+        min: "1024px",
+      },
+      xl: {
+        min: "1280px",
+      },
+      "2xl": {
+        min: "1536px",
+      },
+      "3xl": {
+        min: "1936px",
+      },
+    },
     extend: {
       fontFamily: {
         playFair: ["Playfair Display", "serif"],
         montserrat: ["Montserrat", "sans-serif"],
-      },
-      backgroundColor: {
-        goldGradient:
-          "linear-gradient(90deg, #f2e496 0%, #b3892d 47.5%, #ba983c 100%)",
       },
       colors: {
         mainColor: "#B5995A",

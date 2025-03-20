@@ -57,11 +57,11 @@ const Seva = () => {
                   height: `${item.lineHeight.replace("h-", "") * 1}rem`,
                 }}
               ></div>
-              <div className="w-2 h-2 rounded-full bg-white border border-[#B5995A] absolute -bottom-1 left-1/2 transform -translate-x-1/2 transition-all duration-[0.3s] ease-in-out"></div>
+              <div className="w-2 h-2 rounded-full bg-white border border-[#B5995A] absolute -bottom-1 left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out"></div>
             </div>
 
             <div
-              className={`hover:translate-y-[-12px] h-[280px] lg:h-[320px] xl:h-[350px] w-[180px] lg:w-[230px] xl:w-[280px] ${item.bgClass} bg-cover bg-center relative transition-all duration-[0.3s] ease-in-out p-4 cursor-pointer`}
+              className={`hover:translate-y-[-12px] h-[280px] lg:h-[320px] xl:h-[350px] w-[180px] lg:w-[230px] xl:w-[280px] ${item.bgClass} bg-cover bg-center relative transition-all duration-300 ease-in-out p-4 cursor-pointer`}
             >
               <div className="text-white absolute bottom-4 p-2">
                 <h1 className="font-montserrat font-bold">{item.title}</h1>
