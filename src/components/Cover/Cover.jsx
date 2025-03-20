@@ -17,7 +17,7 @@ const Cover = () => {
           className="w-full flex flex-col-reverse md:flex-row items-center  justify-evenly align-center my-auto gap-y-6 md:gap-2"
         >
           <div className="flex flex-col gap-2">
-            <h1 className="text-2xl md:text-5xl font-playFair font-semibold text-mainColor">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-playFair font-semibold text-mainColor">
               Sri Lakshmi Padmavathi
             </h1>
             <span className="text-center font-montserrat text-white">
