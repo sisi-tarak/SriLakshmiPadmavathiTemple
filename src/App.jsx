@@ -3,6 +3,7 @@ import HomePage from "./components/HomePage/HomePage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import Donate from "./components/Donate/Donate";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const Layout = ({ children }) => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route
             path="/"
