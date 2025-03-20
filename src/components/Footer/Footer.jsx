@@ -48,9 +48,9 @@ const Footer = () => {
   return (
     <footer className="w-full rounded-md bg-black text-white py-8 px-4 font-montserrat">
       <Container maxWidth="lg" className="container mx-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 gap-8">
+        <div className="grid grid-cols-2 lg:items-center lg:grid-cols-5 xl:grid-cols-6 lg:gap-8">
           <div className="col-span-2 md:col-span-2 lg:col-span-1 xl:col-span-2 md:mb-6 mx-auto">
-            <div className="flex flex-row lg:flex-col xl:flex-row justify-center md:justify-start items-start gap-x-5 w-full mb-4  text-sm xs:text-base">
+            <div className="flex flex-row lg:flex-col xl:flex-row justify-center md:justify-start items-start gap-x-5 w-full mb-4 text-sm xs:text-base">
               <p className="font-bold mb-2 w-1/3 lg:w-full xl:w-1/3">
                 Address:
               </p>
@@ -158,7 +158,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-span-2 md:col-span-2 lg:col-span-2 md:w-[80%] lg:w-full mx-auto xl:w-full mb-6 lg:my-0">
+          <div className="col-span-2 md:col-span-2 lg:col-span-2 md:w-[80%] lg:w-full mx-auto xl:w-full my-6 lg:my-0">
             <h3 className="text-lg sm:text-xl font-bold mb-4">
               Sign Up To Newsletter
             </h3>
