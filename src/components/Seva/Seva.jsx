@@ -38,7 +38,7 @@ const Seva = () => {
   ];
 
   return (
-    <div id="seva" className="py-8 md:py-16">
+    <div id="seva" className="relative h-full w-full py-8 md:py-16">
       <div className="flex flex-col items-center gap-2 md:gap-3 z-20">
         <h1 className="text-white text-lg md:text-xl">Sevas</h1>
         <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-mainColor text-center">
@@ -47,7 +47,7 @@ const Seva = () => {
         <img className="w-1/8 animate-pulse" src={white} alt="" />
       </div>
 
-      <div className="relative hidden md:flex flex-row justify-center items-start gap-2 lg:gap-4 xl:gap-6 my-12 w-full md:w-[95%] lg:w-[90%] xl:w-[85%] mx-auto px-4 -mt-36">
+      <div className="relative hidden md:flex flex-row justify-center items-start gap-2 lg:gap-4 xl:gap-6 my-12 w-full md:w-[95%] lg:w-[90%] xl:w-[85%] mx-auto px-4 mt-0 md:-mt-36">
         {sevaItems.map((item) => (
           <div key={item.id} className="flex flex-col items-center -z-10">
             <div className="relative my-5">
