@@ -29,6 +29,7 @@ const Navbar = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSevasMenu, setOpenSevasMenu] = useState(false);
+  const [activeItem, setActiveItem] = useState(1); // Default to Home (id: 1)
   const sevasAnchorRef = React.useRef(null);
 
   const theme = createTheme({
@@ -123,6 +124,8 @@ const Navbar = () => {
   };
 
   const handleNavigation = async (item) => {
+    setActiveItem(item.id);
+
     if (item.type === "section") {
       await scrollToSection(item.path);
     } else {
@@ -170,6 +173,26 @@ const Navbar = () => {
     }
   }, [location]);
 
+  // Set active item based on current path
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setActiveItem(1); // Home
+    } else if (location.pathname.includes("/sevas")) {
+      setActiveItem(3); // Sevas
+    } else {
+      // Match other paths or hash to respective nav items
+      for (const item of navItems) {
+        if (
+          (item.type === "page" && location.pathname === item.path) ||
+          (item.type === "section" && location.hash === item.path)
+        ) {
+          setActiveItem(item.id);
+          break;
+        }
+      }
+    }
+  }, [location]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -187,9 +210,27 @@ const Navbar = () => {
             <ListItemButton
               sx={{
                 transition: "all 0.5s ease",
-                color: item.hasSubmenu && openSevasMenu ? "#B5995A" : "inherit",
+                color:
+                  (item.hasSubmenu && openSevasMenu) || activeItem === item.id
+                    ? "#B5995A"
+                    : "inherit",
                 "&:hover": {
                   backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  color: "#B5995A",
+                },
+                position: "relative",
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  bottom: 0,
+                  left: "16px",
+                  width: activeItem === item.id ? "calc(100% - 32px)" : "0%",
+                  height: "2px",
+                  backgroundColor: "#B5995A",
+                  transition: "all 0.3s ease",
+                },
+                "&:hover::after": {
+                  width: "calc(100% - 32px)",
                 },
               }}
               onClick={() => {
@@ -206,7 +247,10 @@ const Navbar = () => {
                   "& .MuiListItemText-primary": {
                     transition: "all 0.3s ease",
                     fontWeight:
-                      item.hasSubmenu && openSevasMenu ? "500" : "normal",
+                      (item.hasSubmenu && openSevasMenu) ||
+                      activeItem === item.id
+                        ? "500"
+                        : "normal",
                   },
                 }}
               />
@@ -305,38 +349,29 @@ const Navbar = () => {
                       onClick={() => handleNavigation(item)}
                       className="font-playFair"
                       sx={{
-                        color: "#fff",
+                        color: activeItem === item.id ? "#fff" : "#fff",
                         textTransform: "none",
                         fontSize: "16px",
-                        fontWeight: "normal",
+                        fontWeight: activeItem === item.id ? "500" : "normal",
                         position: "relative",
                         "&:hover": {
                           backgroundColor: "transparent",
+                          color: "#fff",
                         },
-
-                        "&::after": item.hasSubmenu
-                          ? {
-                              content: '""',
-                              position: "absolute",
-                              bottom: 0,
-                              left: "50%",
-                              width: openSevasMenu ? "100%" : "0%",
-                              height: "2px",
-                              backgroundColor: "#B5995A",
-                              transition: "all 0.3s ease",
-                              transform: "translateX(-50%)",
-                            }
-                          : {
-                              content: '""',
-                              position: "absolute",
-                              bottom: 0,
-                              left: "50%",
-                              width: !openSevasMenu ? "100%" : "0%",
-                              height: "2px",
-                              backgroundColor: "#B5995A",
-                              transition: "all 0.3s ease",
-                              transform: "translateX(-50%)",
-                            },
+                        "&::after": {
+                          content: '""',
+                          position: "absolute",
+                          bottom: 0,
+                          left: "50%",
+                          width: activeItem === item.id ? "100%" : "0%",
+                          height: "2px",
+                          backgroundColor: "#B5995A",
+                          transition: "all 0.3s ease",
+                          transform: "translateX(-50%)",
+                        },
+                        "&:hover::after": {
+                          width: "100%",
+                        },
                       }}
                     >
                       {item.text}
