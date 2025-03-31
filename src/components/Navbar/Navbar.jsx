@@ -103,7 +103,7 @@ const Navbar = () => {
     {
       id: 6,
       text: "Photo Gallery",
-      path: "/gallery",
+      path: "/photo-gallery",
       type: "page",
     },
     {
