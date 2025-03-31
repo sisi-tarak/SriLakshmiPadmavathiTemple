@@ -29,14 +29,14 @@ const App = () => {
               </Layout>
             }
           />
-          <Route
+          {/* <Route
             path="/donate"
             element={
               <Layout>
                 <Donate />
               </Layout>
             }
-          />
+          /> */}
         </Routes>
       </Router>
     </>
