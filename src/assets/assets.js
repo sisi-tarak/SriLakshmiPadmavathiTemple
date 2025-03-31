@@ -11,6 +11,8 @@ import seva2 from "../assets/seva2.svg";
 import seva3 from "../assets/seva3.svg";
 import seva4 from "../assets/seva4.svg";
 import g1 from "../assets/g1.svg";
+import bannerimage from '../assets/bannerimage.svg';
+import bannerleft from '../assets/bannerleft.svg'
 
 export const assets = {
   Navimage: logo,
@@ -27,4 +29,6 @@ export const assets = {
   seva4: seva4,
   seva: [seva1, seva2, seva3, seva4],
   GallaryData: [g1, g1, g1, g1, g1, g1],
+  bannerimage:bannerimage,
+  bannerleft:bannerleft
 };

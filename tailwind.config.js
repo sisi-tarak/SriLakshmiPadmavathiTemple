@@ -35,7 +35,7 @@ export default {
         montserrat: ["Montserrat", "sans-serif"],
       },
       colors: {
-        mainColor: "#B5995A",
+        mainColor: "#C0322E",
         secondaryColor: "#25292F",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

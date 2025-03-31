@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import { useState } from "react";
 import "./ResearchMap.css";
 
 const mapContainerStyle = {
@@ -14,84 +13,39 @@ const mapContainerStyle = {
   borderRadius: "8px",
 };
 
-const darkMapStyles = [
-  { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-  { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-  { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+const blackYellowMapStyles = [
+  { elementType: "geometry", stylers: [{ color: "#000000" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#000000" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#FFD700" }] }, // Yellow text
   {
     featureType: "administrative.locality",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#d59563" }],
+    stylers: [{ color: "#FFD700" }],
   },
   {
     featureType: "poi",
     elementType: "labels.text.fill",
-    stylers: [{ color: "#d59563" }],
+    stylers: [{ color: "#FFD700" }],
   },
   {
     featureType: "poi.park",
     elementType: "geometry",
-    stylers: [{ color: "#263c3f" }],
-  },
-  {
-    featureType: "poi.park",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#6b9a76" }],
+    stylers: [{ color: "#1a1a1a" }],
   },
   {
     featureType: "road",
     elementType: "geometry",
-    stylers: [{ color: "#38414e" }],
+    stylers: [{ color: "#333333" }],
   },
   {
     featureType: "road",
     elementType: "geometry.stroke",
-    stylers: [{ color: "#212a37" }],
-  },
-  {
-    featureType: "road",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#9ca5b3" }],
-  },
-  {
-    featureType: "road.highway",
-    elementType: "geometry",
-    stylers: [{ color: "#746855" }],
-  },
-  {
-    featureType: "road.highway",
-    elementType: "geometry.stroke",
-    stylers: [{ color: "#1f2835" }],
-  },
-  {
-    featureType: "road.highway",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#f3d19c" }],
-  },
-  {
-    featureType: "transit",
-    elementType: "geometry",
-    stylers: [{ color: "#2f3948" }],
-  },
-  {
-    featureType: "transit.station",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#d59563" }],
+    stylers: [{ color: "#FFD700" }], // Yellow road lines
   },
   {
     featureType: "water",
     elementType: "geometry",
-    stylers: [{ color: "#17263c" }],
-  },
-  {
-    featureType: "water",
-    elementType: "labels.text.fill",
-    stylers: [{ color: "#515c6d" }],
-  },
-  {
-    featureType: "water",
-    elementType: "labels.text.stroke",
-    stylers: [{ color: "#17263c" }],
+    stylers: [{ color: "#000000" }],
   },
 ];
 
@@ -127,10 +81,10 @@ const ResearchMap = ({ locations, title }) => {
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
-          center={{ lat: 8.0883, lng: 77.5385 }} // Center on southern India
-          zoom={4}
+          center={{ lat: 13.5283421, lng: 79.5028648879408 }} 
+          zoom={12}
           options={{
-            styles: darkMapStyles,
+            styles: blackYellowMapStyles,
             disableDefaultUI: true,
             zoomControl: true,
           }}

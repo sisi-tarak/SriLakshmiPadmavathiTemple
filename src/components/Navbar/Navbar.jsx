@@ -90,15 +90,19 @@ const Navbar = () => {
     },
     {
       id: 4,
+
       text: "Contact",
       path: "/contact",
       type: "page",
+
     },
     {
       id: 5,
       text: "Trust",
+
       path: "#trust", // Changed to section ID
       type: "section", // Changed to "section"
+
     },
     {
       id: 6,
@@ -562,13 +566,16 @@ const Navbar = () => {
           }}
           sx={{
             "& .MuiDrawer-paper": {
+
               width: 280,
               bgcolor: "#8B0000",
               color: "#FFFFFF",
+
             },
           }}
         >
           {drawer}
+
         </Drawer>
       </AppBar>
     </div>

@@ -40,24 +40,19 @@ const Seva = () => {
   return (
     <div id="sevas" className="relative h-full w-full py-8 md:py-16">
       <div className="flex flex-col items-center gap-2 md:gap-3 z-20">
-        <h1 className="text-white text-lg md:text-xl">Sevas</h1>
+        <h1 className="text-white text-lg md:text-xl">Our</h1>
         <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-mainColor text-center">
-          Our Collections
+         SEVAS
         </h1>
         <img className="w-1/8 animate-pulse" src={white} alt="" />
       </div>
 
-      <div className="relative hidden md:flex flex-row justify-center items-start gap-2 lg:gap-4 xl:gap-6 my-12 w-full md:w-[95%] lg:w-[90%] xl:w-[85%] mx-auto px-4 mt-0 md:-mt-36">
+      <div className="relative hidden md:flex flex-row justify-center items-start gap-2 lg:gap-4 xl:gap-6 my-12 w-full md:w-[95%] lg:w-[90%] xl:w-[85%] mx-auto px-4 mt-0 md:mt-14 ">
         {sevaItems.map((item) => (
-          <div key={item.id} className="flex flex-col items-center -z-10">
+          <div key={item.id} className="flex flex-col items-center ">
             <div className="relative my-5">
-              <div
-                className="w-[1px] bg-[#B5995A] mx-auto"
-                style={{
-                  height: `${item.lineHeight.replace("h-", "") * 1}rem`,
-                }}
-              ></div>
-              <div className="w-2 h-2 rounded-full bg-white border border-[#B5995A] absolute -bottom-1 left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out"></div>
+             
+             
             </div>
 
             <div

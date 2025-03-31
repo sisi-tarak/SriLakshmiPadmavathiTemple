@@ -1,19 +1,10 @@
 import React from "react";
-import ResearchMap from "./ResearchMap.jsx";
-import "./ResearchMap.css";
 
 import white from "../../assets/white.svg";
+import Emap from "./Emap";
 
 function ResearchPage() {
-  const researchLocations = [
-    {
-      name: "Marine Research Station",
-      lat: 8.0883,
-      lng: 77.5385,
-      description: "Coastal ecology and marine biodiversity research center",
-    },
-  ];
-
+  
   return (
     <div className="research-page">
       <div className="flex flex-col justify-center items-center gap-2">
@@ -24,7 +15,7 @@ function ResearchPage() {
         <img className="w-1/8 animate-pulse" src={white} alt="" />
       </div>
       <div className="container flex mx-auto mt-8 mb-12">
-        <ResearchMap locations={researchLocations} title="" />
+      <Emap />
       </div>
     </div>
   );
