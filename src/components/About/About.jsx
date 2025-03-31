@@ -5,7 +5,7 @@ import paper from "../../assets/Container.svg";
 
 const About = () => {
   return (
-    <section id="about" className="mb-3 h-full">
+    <div className="mb-3 h-full">
       <div className="flex flex-col justify-center items-center gap-2">
         <h1 className="text-white">About Us</h1>
         <h1 className="text-xl sm:text-3xl md:text-4xl text-mainColor">
@@ -21,7 +21,7 @@ const About = () => {
       <div className="w-72 h-1 bg-mainColor mt-2 animate-pulse">
         <span className="w-20 h-2 bg-mainColor"></span>
       </div>
-    </section>
+    </div>
   );
 };
 

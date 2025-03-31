@@ -10,7 +10,6 @@ const HomePage = () => {
   return (
     <>
       <Cover />
-      <About />
       <Seva />
       <Gallary />
       <Trust />
