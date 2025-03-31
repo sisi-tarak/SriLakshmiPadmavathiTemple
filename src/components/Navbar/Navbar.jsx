@@ -16,7 +16,6 @@ import {
   Popper,
   Paper,
   Grow,
-  ClickAwayListener,
   MenuList,
   MenuItem,
 } from "@mui/material";
@@ -76,13 +75,13 @@ const Navbar = () => {
     {
       id: 4,
       text: "Gallery",
-      path: "#gallery",
+      path: "/gallery",
       type: "section",
     },
     {
       id: 5,
       text: "Trust",
-      path: "#trust",
+      path: "/trust",
       type: "section",
     },
     {
@@ -513,7 +512,7 @@ const Navbar = () => {
               paddingLeft: "20px",
               boxSizing: "border-box",
               width: 250,
-              backgroundColor: "#25292F",
+              backgroundColor: "#C0322E",
             },
           }}
         >
@@ -522,7 +521,7 @@ const Navbar = () => {
             className="text-white font-playFair px-8 py-2 bg-gradient-to-r from-[#f2e496] via-[#b3892d] to-[#ba983c]"
             sx={{
               color: "#fff",
-              backgroundColor: "#b3892d",
+              backgroundColor: "#C0322E",
               width: "80%",
               marginX: "auto",
               paddingY: "10px",

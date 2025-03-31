@@ -46,7 +46,7 @@ const handlePaypal = () => {
 
 const Footer = () => {
   return (
-    <footer className="w-full rounded-md bg-black text-white py-8 px-4 font-montserrat">
+    <footer className="w-full rounded-md bg-[#C0322E] text-white py-8 px-4 font-montserrat">
       <Container maxWidth="lg" className="container mx-auto">
         <div className="grid grid-cols-2 lg:items-center lg:grid-cols-5 xl:grid-cols-6 lg:gap-8">
           <div className="col-span-2 md:col-span-2 lg:col-span-1 xl:col-span-2 md:mb-6 mx-auto">
@@ -169,9 +169,7 @@ const Footer = () => {
                   placeholder="Email address"
                   className="w-full bg-transparent text-white text-3xl sm:text-4xl font-light pb-2 pt-0 px-0 border-0 border-b-2 border-white focus:outline-none focus:ring-0 focus:border-white"
                 />
-                <div className="absolute right-0 top-1/2 -translate-y-1/2">
-                  <img src="" alt="Submit" className="w-8 h-8 cursor-pointer" />
-                </div>
+
               </div>
 
               <div className="mt-10">
@@ -186,54 +184,7 @@ const Footer = () => {
                     <FaGooglePay size={30} className="text-gray-700" />
                   </button>
 
-                  <button
-                    onClick={handleAmex}
-                    className="bg-blue-600 rounded-md p-1 h-8 w-10 flex items-center justify-center hover:opacity-80"
-                  >
-                    <FaCcAmex size={30} className="text-white" />
-                  </button>
-
-                  <button
-                    onClick={handleDiscover}
-                    className="bg-gray-700 rounded-md p-1 h-8 w-10 flex items-center justify-center hover:opacity-80"
-                  >
-                    <FaCcDiscover size={30} className="text-white" />
-                  </button>
-
-                  <button
-                    onClick={handleStripe}
-                    className="bg-white rounded-md p-1 h-8 w-10 flex items-center justify-center hover:opacity-80"
-                  >
-                    <FaCcStripe size={30} className="text-purple-500" />
-                  </button>
-
-                  <button
-                    onClick={handleApplePay}
-                    className="bg-white rounded-md p-1 h-8 w-10 flex items-center justify-center hover:opacity-80"
-                  >
-                    <FaApplePay size={30} className="text-black" />
-                  </button>
-
-                  <button
-                    onClick={handleVisa}
-                    className="bg-blue-800 rounded-md p-1 h-8 w-10 flex items-center justify-center hover:opacity-80"
-                  >
-                    <FaCcVisa size={30} className="text-white" />
-                  </button>
-
-                  <button
-                    onClick={handleMastercard}
-                    className="bg-white rounded-md p-1 h-8 w-10 flex items-center justify-center hover:opacity-80"
-                  >
-                    <FaCcMastercard size={30} className="text-red-500" />
-                  </button>
-
-                  <button
-                    onClick={handlePaypal}
-                    className="bg-white rounded-md p-1 h-8 w-10 flex items-center justify-center hover:opacity-80"
-                  >
-                    <FaCcPaypal size={30} className="text-blue-700" />
-                  </button>
+                  
                 </div>
               </div>
             </div>
