@@ -38,7 +38,7 @@ const Gallary = () => {
           alt=""
           onClick={() => openModal(img1)} 
         />
-        <div className="flex flex-col gap-2 h-[420px] items-center justify-center">
+        <div className="flex flex-col  h-[420px] items-center justify-center">
           <img
             className="h-[190px] cursor-pointer"
             src={img2}
@@ -53,7 +53,7 @@ const Gallary = () => {
           />
         </div>
         <img
-          className="max-w-[320px] h-[400px] rounded-lg cursor-pointer"
+          className="max-w-[320px] h-[390px] rounded-lg cursor-pointer"
           src={img4}
           alt=""
           onClick={() => openModal(img4)} 
