@@ -38,7 +38,7 @@ const Seva = () => {
   ];
 
   return (
-    <div id="seva" className="relative h-full w-full py-8 md:py-16">
+    <div id="sevas" className="relative h-full w-full py-8 md:py-16">
       <div className="flex flex-col items-center gap-2 md:gap-3 z-20">
         <h1 className="text-white text-lg md:text-xl">Our</h1>
         <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-mainColor text-center">

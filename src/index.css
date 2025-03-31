@@ -13,29 +13,31 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #25292f;
+  background: #FAAC2F;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #b5995adf;
+  background: #8D1214;
   border-radius: 4px;
-  transition: 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b5995a;
+  background: #C0322E;
 }
 
 body {
-  background: #FAAC2F;
+
+  background: #faac2f;
+
   font-family: "Playfair Display", serif;
-  padding: 4px;
+  padding: 6px 2px 6px 6px;
 }
 
 @layer base {

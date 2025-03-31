@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   AppBar,
   Box,
@@ -18,9 +18,13 @@ import {
   Grow,
   MenuList,
   MenuItem,
+  Divider,
+  Typography,
 } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import menuImg from "../../assets/SVG.svg";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import headBannerImg from "../../assets/HeadBanner.png";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -28,8 +32,9 @@ const Navbar = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [openSevasMenu, setOpenSevasMenu] = useState(false);
-  const [activeItem, setActiveItem] = useState(1); // Default to Home (id: 1)
-  const sevasAnchorRef = React.useRef(null);
+  const [activeItem, setActiveItem] = useState(null);
+  const sevasAnchorRef = useRef(null);
+  const hasScrolled = useRef(false);
 
   const theme = createTheme({
     breakpoints: {
@@ -45,50 +50,71 @@ const Navbar = () => {
     },
   });
 
-  const sevasSubmenu = [
-    { id: 1, text: "Daily Sevas", path: "/sevas/daily" },
-    { id: 2, text: "Special Sevas", path: "/sevas/special" },
-    { id: 3, text: "Festival Sevas", path: "/sevas/festival" },
-    { id: 4, text: "Book a Seva", path: "/sevas/book" },
+  // Updated Sevas submenu groups based on the image
+  const sevasSubmenuGroups = [
+    {
+      items: [
+        { id: 1, text: "Arjitha Sevas", path: "/sevas/arjitha-sevas" },
+        { id: 2, text: "Daily Sevas", path: "/sevas/daily-sevas" },
+        { id: 3, text: "Weekly Sevas", path: "/sevas/weekly-sevas" },
+        {
+          id: 4,
+          text: "Annual or Periodical Sevas",
+          path: "/sevas/annual-periodical-sevas",
+        },
+      ],
+    },
   ];
 
+  // Navigation items based on the latest image
   const navItems = [
     {
       id: 1,
-      text: "Home",
+      text: "",
+      icon: <HomeIcon />,
       path: "/",
       type: "page",
     },
     {
       id: 2,
-      text: "About us",
-      path: "#about",
-      type: "section",
+      text: "About",
+      path: "/about",
+      type: "page",
     },
     {
       id: 3,
       text: "Sevas",
-      path: "#seva",
-      type: "section",
+      path: "#sevas", // Changed to section ID
+      type: "section", // Changed to "section"
       hasSubmenu: true,
     },
     {
       id: 4,
-      text: "Gallery",
-      path: "/gallery",
-      type: "section",
+
+      text: "Contact",
+      path: "/contact",
+      type: "page",
+
     },
     {
       id: 5,
       text: "Trust",
-      path: "/trust",
-      type: "section",
+
+      path: "#trust", // Changed to section ID
+      type: "section", // Changed to "section"
+
     },
     {
       id: 6,
-      text: "Contact us",
-      path: "#contact",
-      type: "section",
+      text: "Photo Gallery",
+      path: "/photo-gallery",
+      type: "page",
+    },
+    {
+      id: 7,
+      text: "Donate",
+      path: "/donate",
+      type: "page",
     },
   ];
 
@@ -98,44 +124,49 @@ const Navbar = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleDonate = () => {
-    navigate("/donate");
-  };
-
-  const scrollToSection = async (sectionId) => {
-    const targetId = sectionId.replace("#", "");
-
-    if (location.pathname !== "/") {
-      await navigate("/");
-
-      setTimeout(() => {
-        const element = document.getElementById(targetId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 100);
-    } else {
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
-  const handleNavigation = async (item) => {
+  // Improved navigation handler with direct section scroll
+  const handleNavigation = (item) => {
     setActiveItem(item.id);
 
     if (item.type === "section") {
-      await scrollToSection(item.path);
+      const targetId = item.path.replace("#", "");
+
+      // If not on homepage, navigate to home with the section target
+      if (location.pathname !== "/") {
+        navigate("/", { state: { scrollTo: targetId } });
+      } else {
+        // Already on home page, scroll to the section
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        } else {
+          console.warn(`Element with id '${targetId}' not found`);
+        }
+      }
     } else {
+      // For regular page navigation
       navigate(item.path);
     }
-    if (isMobile) handleDrawerToggle();
+
+    // Close mobile drawer if open
+    if (isMobile) {
+      handleDrawerToggle();
+    }
+
+    // Close Sevas menu if open (clicking on main Sevas nav item)
+    if (item.hasSubmenu) {
+      if (isMobile) {
+        handleToggleSevasMenu();
+      } else {
+        setOpenSevasMenu(false);
+      }
+    }
   };
 
   const handleSevasSubmenuItem = (path) => {
     navigate(path);
     setOpenSevasMenu(false);
+    if (isMobile) handleDrawerToggle();
   };
 
   const handleSevasMouseEnter = () => {
@@ -144,168 +175,156 @@ const Navbar = () => {
     }
   };
 
-  const handleSevasMouseLeave = () => {
+  const handleSevasMouseLeave = (e) => {
+    if (!isMobile) {
+      // Check if the mouse is leaving to the submenu
+      const relatedTarget = e.relatedTarget;
+      const submenu = document.getElementById("sevas-submenu");
+
+      if (submenu && !submenu.contains(relatedTarget)) {
+        setOpenSevasMenu(false);
+      }
+    }
+  };
+
+  // Add handlers for the submenu itself
+  const handleSubmenuMouseEnter = () => {
+    if (!isMobile) {
+      setOpenSevasMenu(true);
+    }
+  };
+
+  const handleSubmenuMouseLeave = () => {
     if (!isMobile) {
       setOpenSevasMenu(false);
     }
   };
 
-  const handleClose = (event) => {
-    if (
-      sevasAnchorRef.current &&
-      sevasAnchorRef.current.contains(event.target)
-    ) {
-      return;
-    }
-    setOpenSevasMenu(false);
+  const handleToggleSevasMenu = () => {
+    setOpenSevasMenu((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (location.hash) {
-      const targetId = location.hash.replace("#", "");
-      const element = document.getElementById(targetId);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-      }
-    }
-  }, [location]);
-
-  // Set active item based on current path
+  // Enhanced useEffect to handle section scrolling after navigation
   useEffect(() => {
     if (location.pathname === "/") {
       setActiveItem(1); // Home
-    } else if (location.pathname.includes("/sevas")) {
-      setActiveItem(3); // Sevas
+
+      // Check if we need to scroll to a section after navigation
+      if (location.state && location.state.scrollTo && !hasScrolled.current) {
+        const targetId = location.state.scrollTo;
+        hasScrolled.current = true;
+
+        // Use a short delay to ensure the homepage components are rendered
+        setTimeout(() => {
+          const element = document.getElementById(targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          } else {
+            console.warn(
+              `Element with id '${targetId}' not found after navigation`
+            );
+          }
+
+          // Clean up state after scrolling
+          navigate("/", { replace: true, state: null });
+
+          // Reset the scroll flag after a delay
+          setTimeout(() => {
+            hasScrolled.current = false;
+          }, 500);
+        }, 300);
+      }
     } else {
-      // Match other paths or hash to respective nav items
+      // Match path to respective nav items
+      let matchFound = false;
+
       for (const item of navItems) {
         if (
-          (item.type === "page" && location.pathname === item.path) ||
-          (item.type === "section" && location.hash === item.path)
+          item.type === "page" &&
+          location.pathname.startsWith(item.path) &&
+          item.path !== "/"
         ) {
           setActiveItem(item.id);
+          matchFound = true;
           break;
         }
       }
+
+      // Check for submenu paths
+      if (!matchFound && location.pathname.startsWith("/sevas/")) {
+        setActiveItem(3); // Set Sevas as active
+      }
     }
-  }, [location]);
+  }, [location, navigate]);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Mobile drawer content
   const drawer = (
-    <List>
+    <List sx={{ pt: 2 }}>
       {navItems.map((item) => (
         <Box key={item.id}>
           <ListItem disablePadding>
             <ListItemButton
-              sx={{
-                transition: "all 0.5s ease",
-                color:
-                  (item.hasSubmenu && openSevasMenu) || activeItem === item.id
-                    ? "#B5995A"
-                    : "inherit",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  color: "#B5995A",
-                },
-                position: "relative",
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  bottom: 0,
-                  left: "16px",
-                  width: activeItem === item.id ? "calc(100% - 32px)" : "0%",
-                  height: "2px",
-                  backgroundColor: "#B5995A",
-                  transition: "all 0.3s ease",
-                },
-                "&:hover::after": {
-                  width: "calc(100% - 32px)",
-                },
-              }}
               onClick={() => {
-                if (item.hasSubmenu) {
-                  setOpenSevasMenu(!openSevasMenu);
+                if (item.hasSubmenu && item.type !== "section") {
+                  handleToggleSevasMenu();
                 } else {
                   handleNavigation(item);
                 }
               }}
+              sx={{
+                color: activeItem === item.id ? "#FFD700" : "#fff",
+                py: 1.5,
+                borderBottom: "1px solid rgba(255,255,255,0.1)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                },
+              }}
             >
               <ListItemText
-                primary={item.text}
-                sx={{
-                  "& .MuiListItemText-primary": {
-                    transition: "all 0.3s ease",
-                    fontWeight:
-                      (item.hasSubmenu && openSevasMenu) ||
-                      activeItem === item.id
-                        ? "500"
-                        : "normal",
-                  },
+                primary={item.icon || item.text}
+                primaryTypographyProps={{
+                  fontSize: "15px",
+                  fontWeight: activeItem === item.id ? "bold" : "normal",
                 }}
               />
-              {item.hasSubmenu && (
-                <IconButton
-                  size="small"
-                  sx={{
-                    color: "#B5995A",
-                    transform: openSevasMenu
-                      ? "rotate(180deg)"
-                      : "rotate(0deg)",
-                    transition: "transform 0.3s ease",
-                    padding: 0,
-                  }}
-                >
-                  ▼
-                </IconButton>
-              )}
+              {item.hasSubmenu && <Typography variant="caption">▼</Typography>}
             </ListItemButton>
           </ListItem>
 
-          {item.hasSubmenu && (
-            <Box
-              sx={{
-                maxHeight: openSevasMenu ? "400px" : "0px",
-                overflow: "hidden",
-                transition: "all 0.5s ease",
-                opacity: openSevasMenu ? 1 : 0,
-              }}
-            >
-              <List sx={{ pl: 4 }}>
-                {sevasSubmenu.map((subItem) => (
-                  <ListItem key={subItem.id} disablePadding>
+          {/* Submenu for Sevas in mobile drawer */}
+          {item.hasSubmenu && openSevasMenu && (
+            <Box sx={{ bgcolor: "rgba(0,0,0,0.2)" }}>
+              {sevasSubmenuGroups.map((group, groupIndex) => (
+                <Box key={groupIndex} sx={{ mb: 1 }}>
+                  {group.items.map((subItem) => (
                     <ListItemButton
+                      key={subItem.id}
                       onClick={() => handleSevasSubmenuItem(subItem.path)}
                       sx={{
-                        transition: "background-color 0.3s ease",
+                        py: 0.7,
+                        pl: 4,
                         "&:hover": {
-                          backgroundColor: "rgba(181, 153, 90, 0.1)",
+                          bgcolor: "rgba(255,255,255,0.1)",
                         },
-                        pl: 2,
-                        borderLeft: "2px solid rgba(181, 153, 90, 0.5)",
                       }}
                     >
                       <ListItemText
                         primary={subItem.text}
-                        sx={{
-                          "& .MuiListItemText-primary": {
-                            fontSize: "0.9rem",
-                          },
-                        }}
+                        primaryTypographyProps={{ fontSize: "14px" }}
                       />
                     </ListItemButton>
-                  </ListItem>
-                ))}
-              </List>
+                  ))}
+                </Box>
+              ))}
             </Box>
           )}
         </Box>
@@ -314,189 +333,229 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-transparent w-full">
-      <Container maxWidth="lg" className="relative z-30 mt-3">
-        <AppBar
-          position="static"
-          sx={{ backgroundColor: "transparent", boxShadow: "none" }}
-        >
-          <Toolbar className="flex justify-between lg:justify-center lg:mx-auto items-center py-4 font-playFair">
-            <Box className="flex lg:hidden items-center flex-grow">
-              <Link
-                to="/"
-                style={{ textDecoration: "none", color: "inherit" }}
-                className="font-montserrat"
-              >
-                Tiruchanar Devasthanam
-              </Link>
-            </Box>
+    <div className="my-6">
+      <Box
+        sx={{
+          backgroundImage: `url(${headBannerImg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          py: 1,
+          px: { xs: 2, md: 5 },
+          height: "150px",
+        }}
+      >
+        <Container maxWidth="lg" className="flex items-center">
+          <Box className="flex items-center justify-start m-auto">
+            <Typography
+              component="h1"
+              className="font-playFair italic my-5 text-sm xs:text-base sm:text-lg lg:text-xl 2xl:text-3xl"
+              sx={{
+                color: "#770101",
+                fontWeight: "bold",
+              }}
+            >
+              Sri Lakshmi Padmavathi Sametha Sri Prasanna <br /> Venkateswara
+              Swamy vaari Devasthanam, Trust.Tirupati
+            </Typography>
+          </Box>
+          <Box className="flex items-center justify-center right-0">
+            <img
+              src="/api/placeholder/200/100"
+              alt="Lord Venkateswara"
+              style={{ height: "80px" }}
+            />
+          </Box>
+        </Container>
+      </Box>
+
+      <AppBar
+        position="static"
+        className="border-t-2 border-[#FAAC2F]"
+        sx={{
+          bgcolor: "#8B0000",
+          zIndex: 999,
+        }}
+      >
+        <Container maxWidth="lg">
+          <div className="h-10 px-0 flex justify-center">
             {!isMobile ? (
-              <div className="flex items-center space-x-8">
-                {navItems.map((item) => (
-                  <div
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "60%",
+                  height: "100%",
+                }}
+              >
+                {navItems.map((item, index) => (
+                  <Button
                     key={item.id}
-                    className="relative group"
+                    onClick={() => handleNavigation(item)}
                     onMouseEnter={
                       item.hasSubmenu ? handleSevasMouseEnter : undefined
                     }
                     onMouseLeave={
                       item.hasSubmenu ? handleSevasMouseLeave : undefined
                     }
+                    ref={item.hasSubmenu ? sevasAnchorRef : null}
+                    sx={{
+                      height: "100%",
+                      color: "#FFFFFF",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "15px",
+                      textTransform: "none",
+                      padding: "0 15px",
+                      borderRadius: 0,
+                      borderRight: "2px solid #FAAC2F",
+                      fontWeight: item.isHighlighted ? "bold" : "normal",
+                      bgcolor:
+                        activeItem === item.id
+                          ? "rgba(0,0,0,0.2)"
+                          : item.isHighlighted
+                          ? "#8B0000"
+                          : "transparent",
+                      "&:hover": {
+                        bgcolor: "rgba(0,0,0,0.2)",
+                      },
+                      flexGrow: item.isHighlighted ? 0 : 1,
+                      maxWidth: item.isHighlighted
+                        ? "auto"
+                        : item.icon
+                        ? "40px"
+                        : "auto",
+                    }}
                   >
-                    <Button
-                      ref={item.hasSubmenu ? sevasAnchorRef : null}
-                      onClick={() => handleNavigation(item)}
-                      className="font-playFair"
-                      sx={{
-                        color: activeItem === item.id ? "#fff" : "#fff",
-                        textTransform: "none",
-                        fontSize: "16px",
-                        fontWeight: activeItem === item.id ? "500" : "normal",
-                        position: "relative",
-                        "&:hover": {
-                          backgroundColor: "transparent",
-                          color: "#fff",
-                        },
-                        "&::after": {
-                          content: '""',
-                          position: "absolute",
-                          bottom: 0,
-                          left: "50%",
-                          width: activeItem === item.id ? "100%" : "0%",
-                          height: "2px",
-                          backgroundColor: "#B5995A",
-                          transition: "all 0.3s ease",
-                          transform: "translateX(-50%)",
-                        },
-                        "&:hover::after": {
-                          width: "100%",
-                        },
-                      }}
-                    >
-                      {item.text}
-                      {item.hasSubmenu && (
-                        <span
-                          style={{
-                            marginLeft: "5px",
-                            fontSize: "10px",
-                            transition: "transform 0.3s ease",
-                            display: "inline-block",
-                            transform: openSevasMenu
-                              ? "rotate(180deg)"
-                              : "rotate(0deg)",
-                          }}
-                        >
-                          ▼
-                        </span>
-                      )}
-                    </Button>
+                    {item.icon || item.text}
+                  </Button>
+                ))}
 
-                    {item.hasSubmenu && (
-                      <Popper
-                        open={openSevasMenu}
-                        anchorEl={sevasAnchorRef.current}
-                        placement="bottom-start"
-                        transition
-                        disablePortal
-                        style={{ zIndex: 1301 }}
+                {/* Sevas Dropdown Menu */}
+                {openSevasMenu && (
+                  <Popper
+                    id="sevas-submenu"
+                    open={openSevasMenu}
+                    anchorEl={sevasAnchorRef.current}
+                    placement="bottom-start"
+                    transition
+                    disablePortal
+                    style={{ zIndex: 999 }}
+                    onMouseEnter={handleSubmenuMouseEnter}
+                    onMouseLeave={handleSubmenuMouseLeave}
+                  >
+                    {({ TransitionProps }) => (
+                      <Grow
+                        {...TransitionProps}
+                        style={{ transformOrigin: "top center" }}
+                        timeout={200}
                       >
-                        {({ TransitionProps }) => (
-                          <Grow
-                            {...TransitionProps}
-                            style={{ transformOrigin: "top left" }}
-                            timeout={300}
+                        <Paper
+                          sx={{
+                            bgcolor: "#8B0000",
+                            color: "#fff",
+                            minWidth: "250px",
+                            borderRadius: 0,
+                            boxShadow: "0 8px 16px rgba(0,0,0,0.3)",
+                            border: "1px solid #6B0000",
+                            mt: 0,
+                          }}
+                          elevation={3}
+                        >
+                          <MenuList
+                            sx={{ p: 1 }}
+                            onMouseEnter={handleSubmenuMouseEnter}
+                            onMouseLeave={handleSubmenuMouseLeave}
                           >
-                            <Paper
-                              sx={{
-                                bgcolor: "rgba(37, 41, 47, 0.95)",
-                                color: "#fff",
-                                minWidth: "200px",
-                                borderRadius: "8px",
-                                mt: 1,
-                                boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
-                                overflow: "hidden",
-                                border: "1px solid rgba(181, 153, 90, 0.3)",
-                              }}
-                              elevation={3}
-                            >
-                              <MenuList
-                                sx={{
-                                  padding: "4px",
-                                }}
-                              >
-                                {sevasSubmenu.map((subItem) => (
+                            {sevasSubmenuGroups.map((group, index) => (
+                              <React.Fragment key={index}>
+                                {group.items.map((item) => (
                                   <MenuItem
-                                    key={subItem.id}
+                                    key={item.id}
                                     onClick={() =>
-                                      handleSevasSubmenuItem(subItem.path)
+                                      handleSevasSubmenuItem(item.path)
                                     }
                                     sx={{
-                                      fontFamily: "inherit",
-                                      margin: "2px 0",
-                                      padding: "8px 16px",
-                                      borderRadius: "6px",
-                                      transition: "all 0.2s ease",
-                                      position: "relative",
+                                      py: 0.7,
+                                      px: 2,
+                                      pl: 2,
+                                      fontSize: "14px",
                                       "&:hover": {
-                                        bgcolor: "#B5995Ac3",
-                                      },
-                                      "&::before": {
-                                        content: '""',
-                                        position: "absolute",
-                                        left: "4px",
-                                        top: "50%",
-                                        transform: "translateY(-50%)",
-                                        width: "0",
-                                        height: "0",
-                                        backgroundColor: "#B5995A",
-                                        borderRadius: "50%",
-                                        transition: "all 0.2s ease",
-                                      },
-                                      "&:hover::before": {
-                                        width: "4px",
-                                        height: "4px",
+                                        bgcolor: "rgba(255,255,255,0.1)",
                                       },
                                     }}
                                   >
-                                    {subItem.text}
+                                    {item.text}
                                   </MenuItem>
                                 ))}
-                              </MenuList>
-                            </Paper>
-                          </Grow>
-                        )}
-                      </Popper>
+                              </React.Fragment>
+                            ))}
+                            <Divider
+                              sx={{
+                                my: 1,
+                                borderColor: "rgba(255,255,255,0.2)",
+                              }}
+                            />
+                            <MenuItem
+                              onClick={() =>
+                                handleSevasSubmenuItem("/sevas/book")
+                              }
+                              sx={{
+                                py: 1,
+                                px: 2,
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                                color: "#FFFFFF",
+                                bgcolor: "rgba(0,0,0,0.2)",
+                                "&:hover": {
+                                  bgcolor: "rgba(0,0,0,0.3)",
+                                },
+                              }}
+                            >
+                              Book a Seva Online
+                            </MenuItem>
+                          </MenuList>
+                        </Paper>
+                      </Grow>
                     )}
-                  </div>
-                ))}
-                <Button
-                  onClick={handleDonate}
-                  className="text-white font-playFair px-8 py-2 bg-gradient-to-r from-[#f2e496] via-[#b3892d] to-[#ba983c]"
+                  </Popper>
+                )}
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  alignItems: "center",
+                  px: 2,
+                }}
+              >
+                <Box
+                  component={Link}
+                  to="/"
                   sx={{
-                    textTransform: "none",
-                    borderRadius: "25px",
-                    padding: "8px 24px",
-                    fontWeight: "medium",
-                    "&:hover": {
-                      backgroundColor: "#c4a030",
-                    },
+                    color: "#FFFFFF",
+                    display: "flex",
+                    alignItems: "center",
                   }}
                 >
-                  Donate
-                </Button>
-              </div>
-            ) : (
-              <IconButton
-                aria-label="open drawer"
-                edge="end"
-                onClick={handleDrawerToggle}
-              >
-                <img src={menuImg} alt="Menu" />
-              </IconButton>
+                  <HomeIcon />
+                </Box>
+                <IconButton
+                  aria-label="open drawer"
+                  edge="end"
+                  onClick={handleDrawerToggle}
+                  sx={{ color: "#FFFFFF" }}
+                >
+                  <img src={menuImg} alt="Menu" />
+                </IconButton>
+              </Box>
             )}
-          </Toolbar>
-        </AppBar>
+          </div>
+        </Container>
 
+        {/* Mobile Drawer */}
         <Drawer
           variant="temporary"
           anchor="right"
@@ -507,39 +566,18 @@ const Navbar = () => {
           }}
           sx={{
             "& .MuiDrawer-paper": {
-              color: "#ffffff",
-              paddingTop: "50px",
-              paddingLeft: "20px",
-              boxSizing: "border-box",
-              width: 250,
-              backgroundColor: "#C0322E",
+
+              width: 280,
+              bgcolor: "#8B0000",
+              color: "#FFFFFF",
+
             },
           }}
         >
           {drawer}
-          <Button
-            className="text-white font-playFair px-8 py-2 bg-gradient-to-r from-[#f2e496] via-[#b3892d] to-[#ba983c]"
-            sx={{
-              color: "#fff",
-              backgroundColor: "#C0322E",
-              width: "80%",
-              marginX: "auto",
-              paddingY: "10px",
-              paddingX: "16px",
-              borderRadius: "25px",
-              marginTop: "15px",
-              fontWeight: "medium",
-              textTransform: "none",
-              "&:hover": {
-                backgroundColor: "#ba983c",
-              },
-            }}
-            onClick={handleDonate}
-          >
-            Donate
-          </Button>
+
         </Drawer>
-      </Container>
+      </AppBar>
     </div>
   );
 };

@@ -4,6 +4,8 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import Donate from "./components/Donate/Donate";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import PhotoGallery from "./components/PhotoGallery/PhotoGallery";
+import About from "./components/About/About";
 
 const Layout = ({ children }) => {
   return (
@@ -30,10 +32,26 @@ const App = () => {
             }
           />
           <Route
+            path="/about"
+            element={
+              <Layout>
+                <About />
+              </Layout>
+            }
+          />
+          <Route
             path="/donate"
             element={
               <Layout>
                 <Donate />
+              </Layout>
+            }
+          />
+          <Route
+            path="/photo-gallery"
+            element={
+              <Layout>
+                <PhotoGallery />
               </Layout>
             }
           />
