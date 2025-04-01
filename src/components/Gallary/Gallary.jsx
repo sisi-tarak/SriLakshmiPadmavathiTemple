@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import white from "../../assets/white.svg";
 import img1 from "../../assets/Gallery/img1.svg";
 import img2 from "../../assets/Gallery/img2.svg";
-import img3 from "../../assets/Gallery/img3.svg";
+import img3 from "../../assets/Gallery/im3.svg";
 import img4 from "../../assets/Gallery/img4.svg";
-import img5 from "../../assets/seva1.svg";
-import img6 from "../../assets/seva2.svg";
-import img7 from "../../assets/seva3.svg";
-import ImageModal from "./ImageModal"; // Import the modal component
+;
+import ImageModal from "./ImageModal"; 
 
 const Gallary = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,31 +36,30 @@ const Gallary = () => {
           className="max-w-[320px] h-[400px] cursor-pointer"
           src={img1}
           alt=""
-          onClick={() => openModal(img1)} // Open modal on click
+          onClick={() => openModal(img1)} 
         />
-        <div className="flex flex-col gap-2 h-[420px] items-center justify-center">
+        <div className="flex flex-col  h-[420px] items-center justify-center">
           <img
             className="h-[190px] cursor-pointer"
             src={img2}
             alt=""
-            onClick={() => openModal(img2)} // Open modal on click
+            onClick={() => openModal(img2)} 
           />
           <img
             className="h-[190px] rounded-lg cursor-pointer"
             src={img3}
             alt=""
-            onClick={() => openModal(img3)} // Open modal on click
+            onClick={() => openModal(img3)} 
           />
         </div>
         <img
-          className="max-w-[320px] h-[400px] rounded-lg cursor-pointer"
+          className="max-w-[320px] h-[390px] rounded-lg cursor-pointer"
           src={img4}
           alt=""
-          onClick={() => openModal(img4)} // Open modal on click
+          onClick={() => openModal(img4)} 
         />
       </div>
 
-      {/* Image Modal */}
       <ImageModal
         isOpen={isModalOpen}
         onClose={closeModal}

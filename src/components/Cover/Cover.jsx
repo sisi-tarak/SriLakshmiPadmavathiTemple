@@ -39,7 +39,9 @@ const Cover = () => {
 
   return (
     <>
+
       <div className="w-full h-full flex flex-col justify-center items-center pb-14">
+
         <div className="absolute top-1/3 left-0 w-full h-full overflow-hidden bg-cover bg-center bg-no-repeat z-[-2]">
           <img src={vectorImg} alt="" />
         </div>
@@ -47,6 +49,7 @@ const Cover = () => {
           id="home"
           className="w-full flex flex-col-reverse md:flex-row items-center justify-evenly align-center my-auto gap-y-6 md:gap-2"
         >
+
           <img className="w-1/2" src={assets.bannerleft} alt="" />
           <div
             ref={imageContainerRef}
@@ -70,6 +73,7 @@ const Cover = () => {
               alt="Next carousel image"
             />
           </div>
+
         </div>
       </div>
     </>
