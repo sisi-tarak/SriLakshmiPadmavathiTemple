@@ -26,6 +26,7 @@ import menuImg from "../../assets/SVG.svg";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import headBannerImg from "../../assets/HeadBanner.png";
 
+
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
