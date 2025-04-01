@@ -50,23 +50,21 @@ const Navbar = () => {
     },
   });
 
-  // Updated Sevas submenu groups based on the image
   const sevasSubmenuGroups = [
     {
       items: [
-        { id: 1, text: "Arjitha Sevas", path: "/sevas/arjitha-sevas" },
-        { id: 2, text: "Daily Sevas", path: "/sevas/daily-sevas" },
-        { id: 3, text: "Weekly Sevas", path: "/sevas/weekly-sevas" },
+        { id: 1, text: "Daily Sevas", path: "/sevas/daily-sevas" },
+        { id: 2, text: "Weekly Sevas", path: "/sevas/weekly-sevas" },
+        { id: 3, text: "Monthly Sevas", path: "/sevas/monthly-sevas" },
         {
           id: 4,
-          text: "Annual or Periodical Sevas",
-          path: "/sevas/annual-periodical-sevas",
+          text: "Auspecious",
+          path: "/sevas/auspecious-sevas",
         },
       ],
     },
   ];
 
-  // Navigation items based on the latest image
   const navItems = [
     {
       id: 1,
@@ -84,8 +82,8 @@ const Navbar = () => {
     {
       id: 3,
       text: "Sevas",
-      path: "#sevas", // Changed to section ID
-      type: "section", // Changed to "section"
+      path: "#sevas",
+      type: "section",
       hasSubmenu: true,
     },
     {
@@ -94,15 +92,12 @@ const Navbar = () => {
       text: "Contact",
       path: "/contact",
       type: "page",
-
     },
     {
       id: 5,
       text: "Trust",
-
-      path: "#trust", // Changed to section ID
-      type: "section", // Changed to "section"
-
+      path: "/trust",
+      type: "page",
     },
     {
       id: 6,
@@ -124,18 +119,15 @@ const Navbar = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  // Improved navigation handler with direct section scroll
   const handleNavigation = (item) => {
     setActiveItem(item.id);
 
     if (item.type === "section") {
       const targetId = item.path.replace("#", "");
 
-      // If not on homepage, navigate to home with the section target
       if (location.pathname !== "/") {
         navigate("/", { state: { scrollTo: targetId } });
       } else {
-        // Already on home page, scroll to the section
         const element = document.getElementById(targetId);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
@@ -144,16 +136,13 @@ const Navbar = () => {
         }
       }
     } else {
-      // For regular page navigation
       navigate(item.path);
     }
 
-    // Close mobile drawer if open
     if (isMobile) {
       handleDrawerToggle();
     }
 
-    // Close Sevas menu if open (clicking on main Sevas nav item)
     if (item.hasSubmenu) {
       if (isMobile) {
         handleToggleSevasMenu();
@@ -177,7 +166,6 @@ const Navbar = () => {
 
   const handleSevasMouseLeave = (e) => {
     if (!isMobile) {
-      // Check if the mouse is leaving to the submenu
       const relatedTarget = e.relatedTarget;
       const submenu = document.getElementById("sevas-submenu");
 
@@ -187,7 +175,6 @@ const Navbar = () => {
     }
   };
 
-  // Add handlers for the submenu itself
   const handleSubmenuMouseEnter = () => {
     if (!isMobile) {
       setOpenSevasMenu(true);
@@ -204,17 +191,14 @@ const Navbar = () => {
     setOpenSevasMenu((prev) => !prev);
   };
 
-  // Enhanced useEffect to handle section scrolling after navigation
   useEffect(() => {
     if (location.pathname === "/") {
-      setActiveItem(1); // Home
+      setActiveItem(1);
 
-      // Check if we need to scroll to a section after navigation
       if (location.state && location.state.scrollTo && !hasScrolled.current) {
         const targetId = location.state.scrollTo;
         hasScrolled.current = true;
 
-        // Use a short delay to ensure the homepage components are rendered
         setTimeout(() => {
           const element = document.getElementById(targetId);
           if (element) {
@@ -225,17 +209,14 @@ const Navbar = () => {
             );
           }
 
-          // Clean up state after scrolling
           navigate("/", { replace: true, state: null });
 
-          // Reset the scroll flag after a delay
           setTimeout(() => {
             hasScrolled.current = false;
           }, 500);
         }, 300);
       }
     } else {
-      // Match path to respective nav items
       let matchFound = false;
 
       for (const item of navItems) {
@@ -250,9 +231,8 @@ const Navbar = () => {
         }
       }
 
-      // Check for submenu paths
       if (!matchFound && location.pathname.startsWith("/sevas/")) {
-        setActiveItem(3); // Set Sevas as active
+        setActiveItem(3);
       }
     }
   }, [location, navigate]);
@@ -266,7 +246,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Mobile drawer content
   const drawer = (
     <List sx={{ pt: 2 }}>
       {navItems.map((item) => (
@@ -300,7 +279,6 @@ const Navbar = () => {
             </ListItemButton>
           </ListItem>
 
-          {/* Submenu for Sevas in mobile drawer */}
           {item.hasSubmenu && openSevasMenu && (
             <Box sx={{ bgcolor: "rgba(0,0,0,0.2)" }}>
               {sevasSubmenuGroups.map((group, groupIndex) => (
@@ -431,7 +409,6 @@ const Navbar = () => {
                   </Button>
                 ))}
 
-                {/* Sevas Dropdown Menu */}
                 {openSevasMenu && (
                   <Popper
                     id="sevas-submenu"
@@ -555,7 +532,6 @@ const Navbar = () => {
           </div>
         </Container>
 
-        {/* Mobile Drawer */}
         <Drawer
           variant="temporary"
           anchor="right"
@@ -566,16 +542,13 @@ const Navbar = () => {
           }}
           sx={{
             "& .MuiDrawer-paper": {
-
               width: 280,
               bgcolor: "#8B0000",
               color: "#FFFFFF",
-
             },
           }}
         >
           {drawer}
-
         </Drawer>
       </AppBar>
     </div>
