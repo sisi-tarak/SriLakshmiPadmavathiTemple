@@ -22,7 +22,7 @@ const Gallary = () => {
   };
 
   return (
-    <section id="gallery" className="mt-14 mb-8 ">
+    <section id="gallery" className="mt-24">
       <div className="flex flex-col justify-center items-center gap-2">
         <h1 className="text-white">GALLERY</h1>
         <h1 className="text-xl sm:text-3xl md:text-4xl text-mainColor">
