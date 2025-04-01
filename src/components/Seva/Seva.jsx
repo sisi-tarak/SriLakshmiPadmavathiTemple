@@ -39,10 +39,12 @@ const Seva = () => {
 
   return (
     <div id="sevas" className="relative h-full w-full mt-24">
-      <div className="flex flex-col items-center gap-2 md:gap-3 z-20">
-        <h1 className="text-white text-lg md:text-xl">Our</h1>
-        <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-mainColor text-center">
-          SEVAS
+      <div className="flex flex-col items-center gap-2 z-20">
+        <h1 className="text-white font-montserrat font-semibold text-base sm:text-lg lg:text-xl tracking-wide uppercase">
+          Our
+        </h1>
+        <h1 className="text-xl sm:text-3xl md:text-4xl text-mainColor font-semibold capitalize">
+          Sevas
         </h1>
         <img className="w-1/8 animate-pulse" src={white} alt="" />
       </div>
