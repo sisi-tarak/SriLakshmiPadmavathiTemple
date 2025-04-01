@@ -6,7 +6,7 @@ import Emap from "./Emap";
 function ResearchPage() {
   
   return (
-    <div className="research-page">
+    <div className="research-page mt-14 mb-5">
       <div className="flex flex-col justify-center items-center gap-2">
         <h1 className="text-white">Showcase</h1>
         <h1 className="text-xl sm:text-3xl md:text-4xl text-mainColor">
