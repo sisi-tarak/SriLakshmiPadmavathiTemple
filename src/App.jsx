@@ -6,6 +6,7 @@ import Donate from "./components/Donate/Donate";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import PhotoGallery from "./components/PhotoGallery/PhotoGallery";
 import About from "./components/About/About";
+import NotFound from "./components/NotFound/NotFound";
 
 const Layout = ({ children }) => {
   return (
@@ -55,6 +56,8 @@ const App = () => {
               </Layout>
             }
           />
+
+          <Route exact path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </>
