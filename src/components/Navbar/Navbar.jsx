@@ -25,7 +25,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import menuImg from "../../assets/SVG.svg";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import headBannerImg from "../../assets/HeadBanner.png";
-
+import Contact from "../Forms/Contact";
+import { icon } from "leaflet";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);

@@ -11,6 +11,7 @@ import Daily from "./components/Seva/Daily";
 import Auspecious from "./components/Seva/Auspecious";
 import Monthly from "./components/Seva/Monthly";
 import Weekly from "./components/Seva/Weekly";
+import Contact from "./components/Forms/Contact";
 
 const Layout = ({ children }) => {
   return (
@@ -41,6 +42,14 @@ const App = () => {
             element={
               <Layout>
                 <About />
+              </Layout>
+            }
+          />
+           <Route
+            path="/contact"
+            element={
+              <Layout>
+                <Contact />
               </Layout>
             }
           />
