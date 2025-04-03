@@ -13,7 +13,8 @@ import seva4 from "../assets/seva4.svg";
 import g1 from "../assets/g1.svg";
 import bannerimage from '../assets/bannerimage.svg';
 import bannerleft from '../assets/bannerleft.svg';
-import gif from "../assets/200.gif"
+import gif from "../assets/200.gif";
+import poster from '../assets/poster.jpg'
 
 export const assets = {
   Navimage: logo,
@@ -32,5 +33,6 @@ export const assets = {
   GallaryData: [g1, g1, g1, g1, g1, g1],
   bannerimage:bannerimage,
   bannerleft:bannerleft,
-  bomma:gif
+  bomma:gif,
+  poster:poster,
 };

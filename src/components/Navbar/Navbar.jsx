@@ -118,6 +118,12 @@ const Navbar = () => {
       path: "/donate",
       type: "page",
     },
+    {
+      id: 8,
+      text: "FeedBack",
+      path: "/feedback",
+      type: "page",
+    },
   ];
 
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));

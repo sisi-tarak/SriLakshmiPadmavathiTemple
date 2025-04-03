@@ -12,6 +12,8 @@ import Auspecious from "./components/Seva/Auspecious";
 import Monthly from "./components/Seva/Monthly";
 import Weekly from "./components/Seva/Weekly";
 import Contact from "./components/Forms/Contact";
+import ScaleWrapper from "./components/ScaleWrapper";
+import Feedback from "./components/Forms/FeedBack";
 
 const Layout = ({ children }) => {
   return (
@@ -25,7 +27,7 @@ const Layout = ({ children }) => {
 
 const App = () => {
   return (
-    <>
+    <ScaleWrapper>
       <Router>
         <ScrollToTop />
         <Routes>
@@ -102,11 +104,18 @@ const App = () => {
               </Layout>
             }
           />
-
+  <Route
+            path="/feedback"
+            element={
+              <Layout>
+              <Feedback />
+              </Layout>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </>
+    </ScaleWrapper>
   );
 };
 

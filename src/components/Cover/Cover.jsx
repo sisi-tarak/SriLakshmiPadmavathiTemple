@@ -39,9 +39,9 @@ const Cover = () => {
         </div>
         <div
           id="home"
-          className="w-full flex flex-col md:flex-row items-center justify-evenly align-center my-auto gap-y-6 md:gap-2"
+          className="w-full flex  md:flex-row items-center justify-evenly align-center my-auto gap-y-6 md:gap-2"
         >
-          <img className="w-1/2" src={assets.bannerleft} alt="" />
+          <img className="w-2/5 md:w-1/4 relative aspect-[3/4] overflow-hidden rounded-3xl" src={assets.poster} alt="" />
           <div className="w-2/5 md:w-1/4 relative aspect-[3/4] overflow-hidden rounded-3xl">
             <img
               className={`w-full h-full object-cover transition-opacity duration-1000 ${
